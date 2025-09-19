@@ -82,4 +82,4 @@ processing_summary.json
 *.tiff
 *.bmp
 !example_*.jpg
-!sample_*.jpg
+!sample_*.jpgprocessed_images/
