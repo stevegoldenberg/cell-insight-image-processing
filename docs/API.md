@@ -62,6 +62,8 @@ Generates timestamp-based filename for a file.
 
 **Returns:** Tuple of (new_filename, date_source)
 
+**Note:** Generates filenames in the format `image-NNNN-original_timestamp.jpg` for samples and `image-NNNN-mask_timestamp.jpg` for masks.
+
 #### `process_all_directories(verbose: bool = False, dry_run: bool = True) -> Dict`
 
 Main processing method that handles the complete workflow.
@@ -120,8 +122,8 @@ The `process_all_directories` method returns a dictionary with the following str
             "sequential_id": 0,
             "original_sample": "sample_image_0.jpg",
             "original_mask": "combined_mask_0.jpg",
-            "new_sample": "sample_image-0000_2025-08-15_11-43-45.jpg",
-            "new_mask": "combined_mask-0000_2025-08-15_11-48-30.jpg",
+            "new_sample": "image-0000-original_2025-08-15_11-43-45.jpg",
+            "new_mask": "image-0000-mask_2025-08-15_11-48-30.jpg",
             "source_directory": "/path/to/original/dir",
             "correlation_score": 0.92
         }

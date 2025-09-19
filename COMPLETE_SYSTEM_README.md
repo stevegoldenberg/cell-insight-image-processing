@@ -17,8 +17,8 @@ This system combines smart image matching with timestamp-based renaming to proce
 # Preview what will happen (recommended first step)
 python3 process_and_rename_images.py --preview --verbose
 
-# Execute the complete processing
-python3 process_and_rename_images.py --execute -o final_processed_images
+# Execute the complete processing (creates processed_images/ directory)
+python3 process_and_rename_images.py --execute
 ```
 
 ## 📊 Real Results
@@ -37,11 +37,11 @@ From your actual data:
 **Single flat directory** with properly matched and renamed files:
 
 ```
-final_processed_images/
-├── sample_image-0077_2025-08-15_11-07-18.jpg      ← Sample image
-├── combined_mask-0077_2025-08-15_11-10-57.jpg     ← Corresponding mask
-├── sample_image-0078_2025-08-15_11-07-24.jpg    
-├── combined_mask-0078_2025-08-15_11-10-59.jpg   
+processed_images/
+├── image-0000-original_2025-08-15_11-07-18.jpg    ← Sample image
+├── image-0000-mask_2025-08-15_11-10-57.jpg        ← Corresponding mask
+├── image-0001-original_2025-08-15_11-07-24.jpg    
+├── image-0001-mask_2025-08-15_11-10-59.jpg        
 ├── ... (87 matched pairs = 174 files total)
 └── processing_summary.json                        ← Complete audit trail
 ```
@@ -54,9 +54,10 @@ final_processed_images/
 - **High accuracy**: 90%+ correlation scores indicate strong matches
 
 ### Timestamp-Based Naming
-- **EXIF data** preferred: `sample_image-0001_2025-08-15_14-23-45.jpg`
+- **EXIF data** preferred: `image-0001-original_2025-08-15_14-23-45.jpg`
 - **File modification time** fallback for images without EXIF
 - **Sequential counters first**: 0000-9999 for easy sorting
+- **Consistent pattern**: `image-NNNN-original_timestamp.jpg` and `image-NNNN-mask_timestamp.jpg`
 
 ### Real-Time Progress Tracking
 - **Visual progress bars** show processing status with tqdm
@@ -79,8 +80,11 @@ python3 process_and_rename_images.py --preview
 # Execute processing
 python3 process_and_rename_images.py --execute
 
-# Custom input/output directories
-python3 process_and_rename_images.py --execute -i /path/to/images -o renamed_collection
+# Custom input directory (output always goes to processed_images/)
+python3 process_and_rename_images.py --execute -i /path/to/images
+
+# Custom output directory name (optional)
+python3 process_and_rename_images.py --execute -i /path/to/images -o custom_output
 
 # Verbose output (shows correlation scores and detailed progress)
 python3 process_and_rename_images.py --execute --verbose
@@ -124,8 +128,8 @@ The `processing_summary.json` file contains:
       "sequential_id": 0,
       "original_sample": "sample_image_0.jpg",
       "original_mask": "combined_mask_0.jpg", 
-      "new_sample": "sample_image-0000_2025-08-15_11-43-45.jpg",
-      "new_mask": "combined_mask-0000_2025-08-15_11-48-30.jpg",
+      "new_sample": "image-0000-original_2025-08-15_11-43-45.jpg",
+      "new_mask": "image-0000-mask_2025-08-15_11-48-30.jpg",
       "source_directory": "/path/to/original/dir"
     }
   ]

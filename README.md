@@ -32,8 +32,8 @@ pip install numpy opencv-python scipy pillow tqdm
 # Preview what will happen (recommended first step)
 python3 process_and_rename_images.py --preview --verbose
 
-# Execute the complete processing
-python3 process_and_rename_images.py --execute -o final_processed_images
+# Execute the complete processing (creates processed_images/ directory)
+python3 process_and_rename_images.py --execute
 ```
 
 ## 📊 Performance
@@ -58,7 +58,7 @@ python3 process_and_rename_images.py --execute --verbose
 python3 process_and_rename_images.py --preview | head -20
 
 # Development testing with small dataset
-python3 process_and_rename_images.py --execute -i test_data -o test_output
+python3 process_and_rename_images.py --execute -i test_data
 ```
 
 ### AI-Assisted Development
@@ -108,17 +108,28 @@ python3 process_and_rename_images.py --preview
 python3 process_and_rename_images.py --execute
 
 # Advanced options
-python3 process_and_rename_images.py --execute -i /path/to/input -o /path/to/output
+python3 process_and_rename_images.py --execute -i /path/to/input
 python3 process_and_rename_images.py --execute --verbose
+python3 process_and_rename_images.py --execute -i /path/to/input -o custom_output_name
 ```
 
 ## 📝 Output
 
-The system generates:
-- **Organized image pairs**: Clean directory structure with matched files
+The system generates a `processed_images/` directory containing:
+- **Organized image pairs**: `image-NNNN-original_timestamp.jpg` and `image-NNNN-mask_timestamp.jpg`
 - **processing_summary.json**: Complete audit trail and metadata
 - **Correlation reports**: Quality metrics for each pairing
 - **Progress logs**: Real-time processing feedback
+
+**Example output structure:**
+```
+processed_images/
+├── image-0000-original_2025-08-15_11-07-18.jpg
+├── image-0000-mask_2025-08-15_11-10-57.jpg
+├── image-0001-original_2025-08-15_11-07-24.jpg
+├── image-0001-mask_2025-08-15_11-10-59.jpg
+└── processing_summary.json
+```
 
 ## 🤝 Contributing
 
@@ -134,6 +145,9 @@ The system generates:
 git clone https://github.com/stevegoldenberg/cell-insight-image-processing.git
 cd cell-insight-image-processing
 pip install -r requirements.txt
+
+# Test the installation
+python3 process_and_rename_images.py --help
 ```
 
 ## 📚 Documentation
