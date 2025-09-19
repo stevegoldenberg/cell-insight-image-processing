@@ -57,10 +57,10 @@ python3 process_and_rename_images.py --execute -i /path/to/input -o /path/to/out
 ### 4. Batch Processing Multiple Datasets
 
 ```bash
-# Process dataset 1 (creates processed_images/ directory)
+# Process dataset 1 (creates dataset1/processed_images/)
 python3 process_and_rename_images.py --execute -i dataset1/
 
-# Process dataset 2 with custom output name
+# Process dataset 2 with custom output name (creates dataset2/dataset2_processed/)
 python3 process_and_rename_images.py --execute -i dataset2/ -o dataset2_processed
 
 # Combine results if needed
@@ -99,12 +99,12 @@ with open('output_directory/processing_summary.json', 'r') as f:
 mkdir test_images
 cp sample_images/* test_images/
 
-# Test with small dataset
+# Test with small dataset (creates test_images/processed_images/)
 python3 process_and_rename_images.py --execute -i test_images --verbose
 
 # Verify test results
-ls processed_images/
-cat processed_images/processing_summary.json | python3 -m json.tool
+ls test_images/processed_images/
+cat test_images/processed_images/processing_summary.json | python3 -m json.tool
 ```
 
 ## Warp-Specific Workflows
@@ -132,7 +132,7 @@ read -p "Continue with processing? (y/N): " confirm
 if [[ $confirm == [yY] ]]; then
     python3 process_and_rename_images.py --execute --verbose
     echo "✅ Processing complete!"
-    ls -la processed_images/
+    ls -la ./processed_images/  # Created in current directory
 else
     echo "❌ Processing cancelled"
 fi
@@ -210,11 +210,11 @@ for i, img_dir in enumerate(base_dir.glob('*')):
     os.symlink(img_dir, chunk_dir / img_dir.name)
 "
 
-# Process each chunk
+# Process each chunk (output goes inside each chunk directory)
 for chunk in chunk_*; do
     echo "Processing $chunk..."
-    python3 process_and_rename_images.py --execute -i "$chunk" -o "processed_$chunk" --verbose
-    mv processed_images/ "processed_$chunk/" 2>/dev/null || true
+    python3 process_and_rename_images.py --execute -i "$chunk" -o "processed_data" --verbose
+    # Output is automatically created as $chunk/processed_data/
 done
 ```
 
@@ -248,7 +248,7 @@ while proc.poll() is None:
 
 echo "🔬 Starting cell analysis pipeline..."
 
-# Step 1: Process and organize images
+# Step 1: Process and organize images (creates raw_images/processed_images/)
 python3 process_and_rename_images.py --execute -i raw_images/ --verbose
 
 # Step 2: Run analysis (example)
@@ -266,7 +266,7 @@ echo "✅ Pipeline complete!"
 # Download from cloud storage
 aws s3 sync s3://my-bucket/microscopy-data/ ./raw_images/
 
-# Process images
+# Process images (creates raw_images/processed_images/)
 python3 process_and_rename_images.py --execute -i raw_images/
 
 # Upload results

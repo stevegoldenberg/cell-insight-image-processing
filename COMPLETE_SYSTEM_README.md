@@ -17,7 +17,7 @@ This system combines smart image matching with timestamp-based renaming to proce
 # Preview what will happen (recommended first step)
 python3 process_and_rename_images.py --preview --verbose
 
-# Execute the complete processing (creates processed_images/ directory)
+# Execute the complete processing (creates processed_images/ inside input directory)
 python3 process_and_rename_images.py --execute
 ```
 
@@ -34,16 +34,21 @@ From your actual data:
 
 ## 📁 Output Structure
 
-**Single flat directory** with properly matched and renamed files:
+**Output directory created inside input directory** with properly matched and renamed files:
 
 ```
-processed_images/
-├── image-0000-original_2025-08-15_11-07-18.jpg    ← Sample image
-├── image-0000-mask_2025-08-15_11-10-57.jpg        ← Corresponding mask
-├── image-0001-original_2025-08-15_11-07-24.jpg    
-├── image-0001-mask_2025-08-15_11-10-59.jpg        
-├── ... (87 matched pairs = 174 files total)
-└── processing_summary.json                        ← Complete audit trail
+input_directory/
+├── original_sample_directories/
+│   ├── 2025-08-15_11-07-01_test_sample/
+│   ├── 2025-08-15_11-11-55_test_sample/
+│   └── ...
+└── processed_images/                              ← Created automatically
+    ├── image-0000-original_2025-08-15_11-07-18.jpg
+    ├── image-0000-mask_2025-08-15_11-10-57.jpg    
+    ├── image-0001-original_2025-08-15_11-07-24.jpg
+    ├── image-0001-mask_2025-08-15_11-10-59.jpg    
+    ├── ... (87 matched pairs = 174 files total)
+    └── processing_summary.json                    ← Complete audit trail
 ```
 
 ## 🎯 Key Features
@@ -80,10 +85,10 @@ python3 process_and_rename_images.py --preview
 # Execute processing
 python3 process_and_rename_images.py --execute
 
-# Custom input directory (output always goes to processed_images/)
+# Process images in specific directory (creates processed_images/ inside that directory)
 python3 process_and_rename_images.py --execute -i /path/to/images
 
-# Custom output directory name (optional)
+# Custom output directory name (created inside input directory)
 python3 process_and_rename_images.py --execute -i /path/to/images -o custom_output
 
 # Verbose output (shows correlation scores and detailed progress)

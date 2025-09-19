@@ -32,7 +32,7 @@ pip install numpy opencv-python scipy pillow tqdm
 # Preview what will happen (recommended first step)
 python3 process_and_rename_images.py --preview --verbose
 
-# Execute the complete processing (creates processed_images/ directory)
+# Execute the complete processing (creates processed_images/ inside input directory)
 python3 process_and_rename_images.py --execute
 ```
 
@@ -57,7 +57,7 @@ python3 process_and_rename_images.py --execute --verbose
 # Quick quality check
 python3 process_and_rename_images.py --preview | head -20
 
-# Development testing with small dataset
+# Development testing with small dataset (creates test_data/processed_images/)
 python3 process_and_rename_images.py --execute -i test_data
 ```
 
@@ -115,7 +115,7 @@ python3 process_and_rename_images.py --execute -i /path/to/input -o custom_outpu
 
 ## 📝 Output
 
-The system generates a `processed_images/` directory containing:
+The system generates a `processed_images/` directory **inside the input directory** containing:
 - **Organized image pairs**: `image-NNNN-original_timestamp.jpg` and `image-NNNN-mask_timestamp.jpg`
 - **processing_summary.json**: Complete audit trail and metadata
 - **Correlation reports**: Quality metrics for each pairing
@@ -123,12 +123,16 @@ The system generates a `processed_images/` directory containing:
 
 **Example output structure:**
 ```
-processed_images/
-├── image-0000-original_2025-08-15_11-07-18.jpg
-├── image-0000-mask_2025-08-15_11-10-57.jpg
-├── image-0001-original_2025-08-15_11-07-24.jpg
-├── image-0001-mask_2025-08-15_11-10-59.jpg
-└── processing_summary.json
+input_directory/
+├── original_data/
+│   ├── sample_batch_1/
+│   └── sample_batch_2/
+└── processed_images/                    ← Created automatically
+    ├── image-0000-original_2025-08-15_11-07-18.jpg
+    ├── image-0000-mask_2025-08-15_11-10-57.jpg
+    ├── image-0001-original_2025-08-15_11-07-24.jpg
+    ├── image-0001-mask_2025-08-15_11-10-59.jpg
+    └── processing_summary.json
 ```
 
 ## 🤝 Contributing
