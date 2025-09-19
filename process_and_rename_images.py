@@ -189,11 +189,11 @@ class ImageProcessor:
         extension = file_path.suffix
         
         if file_type == "sample":
-            filename = f"sample_image-{counter_str}_{date_str}{extension}"
+            filename = f"image-{counter_str}-original_{date_str}{extension}"
         elif file_type == "mask":
-            filename = f"combined_mask-{counter_str}_{date_str}{extension}"
+            filename = f"image-{counter_str}-mask_{date_str}{extension}"
         else:
-            filename = f"{file_type}-{counter_str}_{date_str}{extension}"
+            filename = f"image-{counter_str}-{file_type}_{date_str}{extension}"
         
         return filename, date_source
     
@@ -407,6 +407,7 @@ Examples:
         return 1
     
     input_dir = os.path.abspath(args.input)
+    # Make output directory relative to current working directory
     output_dir = os.path.abspath(args.output)
     
     if not os.path.exists(input_dir):
