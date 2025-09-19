@@ -387,7 +387,7 @@ Examples:
     parser.add_argument(
         '--output', '-o',
         default='processed_images',
-        help='Output directory for processed files (default: processed_images)'
+        help='Output directory name (created inside input directory, default: processed_images)'
     )
     parser.add_argument(
         '--verbose', '-v',
@@ -407,8 +407,8 @@ Examples:
         return 1
     
     input_dir = os.path.abspath(args.input)
-    # Make output directory relative to current working directory
-    output_dir = os.path.abspath(args.output)
+    # Place output directory inside the input directory
+    output_dir = os.path.join(input_dir, args.output)
     
     if not os.path.exists(input_dir):
         print(f"Error: Input directory '{input_dir}' does not exist")
